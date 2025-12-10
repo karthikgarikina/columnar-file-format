@@ -1,0 +1,4 @@
+id,name,score,is_pass
+1,Alice,95.5,true
+2,Bob,88.0,true
+3,Chris,60.0,false
