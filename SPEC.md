@@ -263,7 +263,7 @@ id,name,score,is_pass
 2,Bob,88.0,true
 3,Chris,60.0,false
 row_count = 3
-
+```
 column_count = 4
 
 Types:

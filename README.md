@@ -43,7 +43,7 @@ columnar-file-format/
 │ └─ cli.py               # CLI & interactive menu
 ├─ data/
 │ ├─ test.csv
-│ └─ benchmark results generated here
+│ └─ benchmark and generated data results are stored here
 ├─ tests/
 │ ├─ test_roundtrip.py
 │ └─ benchmark_single_column.py
@@ -57,7 +57,7 @@ columnar-file-format/
 ## ⚡ Quick Start
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/karthikgarikina/columnar-file-format
 cd columnar-file-format
 python main.py
 ```
