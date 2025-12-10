@@ -23,7 +23,7 @@ All multi-byte integers and floats are stored in **little-endian** byte order.
 ## 2. High-level File Layout
 
 A `.gppcol` file is laid out as:
-
+```
 +----------------------+
 | File Header          |
 | - Magic + Version    |
@@ -40,6 +40,7 @@ A `.gppcol` file is laid out as:
 +----------------------+
 | Column N-1 Block     |
 +----------------------+
+```
 
 Each **column block** is a zlib-compressed blob that, once decompressed, contains the column data in a type-specific layout.
 
@@ -255,70 +256,31 @@ This achieves **column pruning** and faster selective reads.
 
 ## 8. Example
 
-Given CSV:
-
-```csv
+```
 id,name,score,is_pass
 1,Alice,95.5,true
 2,Bob,88.0,true
 3,Chris,60.0,false
-row_count = 3
 ```
-column_count = 4
 
-Types:
+`row_count = 3`  
+`column_count = 4`
 
-id → int32
+string offsets example:
 
-name → string
+```
+strings = ["Alice","Bob","Chris"]
+offsets = [0,5,8,13]
+```
 
-score → float64
+---
 
-is_pass → bool
+## 9. Future Extensions
 
-The header will contain 4 column metadata entries, each with:
+- Null support  
+- More data types  
+- Snappy/LZ4/ZSTD compression  
+- Row groups + predicate pushdown  
+- Dictionary encoding  
 
-name ("id", "name", "score", "is_pass")
-
-type_id (1, 3, 2, 4)
-
-data_offset, compressed_size, uncompressed_size
-
-name column uncompressed layout:
-
-offsets length = N + 1 = 4
-
-Strings: "Alice", "Bob", "Chris"
-
-UTF-8 data bytes: b"AliceBobChris"
-
-Byte lengths: 5, 3, 5
-
-offsets:
-
-offsets[0] = 0
-
-offsets[1] = 5
-
-offsets[2] = 8
-
-offsets[3] = 13 (total length)
-
-So:
-uncompressed_name_buffer =
-    [0, 5, 8, 13] as uint32s +
-    b"AliceBobChris"
-9. Versioning and Future Extensions
-version field currently set to 1.
-
-Reserved bytes in header can be used later (e.g. flags, compression type).
-
-Future enhancements (not required for v1):
-
-Row groups / multiple blocks per column
-
-Dictionary encoding for strings
-
-NULL / missing value markers
-
-Additional data types (date, timestamp, etc.)
+---
