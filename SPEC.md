@@ -24,7 +24,6 @@ All multi-byte integers and floats are stored in **little-endian** byte order.
 
 A `.gppcol` file is laid out as:
 
-``table
 +----------------------+
 | File Header          |
 | - Magic + Version    |
@@ -41,7 +40,6 @@ A `.gppcol` file is laid out as:
 +----------------------+
 | Column N-1 Block     |
 +----------------------+
-```
 
 Each **column block** is a zlib-compressed blob that, once decompressed, contains the column data in a type-specific layout.
 
